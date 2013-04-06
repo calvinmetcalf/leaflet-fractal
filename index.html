@@ -31,10 +31,9 @@
 	<script src="FractalLayer.js"></script>
 	<script src="leaflet-hash.js"></script>
 	<script type="text/javascript">
-        var map = L.map('map',{minZoom:1}).setView([0, -90], 2);
-        
+        var map = L.map('map',{minZoom:1}).setView([0, -90], 2).addHash();
         L.tileLayer.fractalLayer(4).addTo(map);
-        map.addHash();
+ 
 	</script>
 </body>
 </html>
