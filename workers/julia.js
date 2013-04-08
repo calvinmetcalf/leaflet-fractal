@@ -1,5 +1,5 @@
 var colorFunc = function(h,pixels,iii){
-    				//from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
+        			//from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
 					var v = 0.75;
                     var s =h===360?0:0.75;
 					var rgb, i, data = [];
@@ -40,12 +40,12 @@ var workerFunc = function(data,cb) {
     		var scale = Math.pow(2, data.z - 1);
 			var x0 = data.x / scale - 1;
 			var y0 = data.y / scale - 1;
-            var cr=-0.74543
-            var ci=0.11301;
+            var cr=data.cr;
+            var ci=data.ci;
 			var d = 1/(scale<<8);
 			var pixels = new Array(262144);
-			var MAX_ITER=500;
-			var isOut,c,cx,cy,x,y,xn,yn,iii=0;
+			var MAX_ITER=data.maxIter;
+			var c,cx,cy,x,y,xn,yn,iii=0;
 			for (var py = 0; py < 256; py++) {
 				for (var px = 0; px < 256; px++) {
 					cx = x0 + px*d;

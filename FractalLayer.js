@@ -4,13 +4,16 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 		maxZoom:23,
         continuousWorld:true
 	},
-	initialize: function (workers,fractalType) {
+	initialize: function (workers,fractalType,maxIter,cr,ci) {
         this.fractalType = fractalType||"mandlebrot";
 		this.workers=workers;
 		this._workers = new Array(this.workers);
       
         this.messages={};
         this.queue={total:workers};
+        this.cr =cr || -0.74543;
+        this.ci = ci ||0.11301;
+        this.maxIter=maxIter||500;
 	},
     onAdd:function(map){
         var _this=this;
@@ -84,9 +87,9 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     	canvas._tileIndex = {x: tilePoint.x, y: tilePoint.y, z: z};
         var tileID=tilePoint.x+":"+tilePoint.y+":"+z;
         this.messages[tileID]=canvas;
-        this._workers[workerID].postMessage({x: tilePoint.x, y:tilePoint.y, z: z,tileID:tileID,workerID:workerID});
+        this._workers[workerID].postMessage({x: tilePoint.x, y:tilePoint.y, z: z,tileID:tileID,workerID:workerID,cr:this.cr,ci:this.ci,maxIter:this.maxIter});
     }
 });
-L.tileLayer.fractalLayer=function(workers,t){
-	return new L.TileLayer.FractalLayer(workers,t);
+L.tileLayer.fractalLayer=function(workers,t,mi,cr,ci){
+	return new L.TileLayer.FractalLayer(workers,t,mi,cr,ci);
 }
