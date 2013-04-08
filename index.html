@@ -22,7 +22,7 @@
 
 <body>	<div class="github-fork-ribbon-wrapper right">
 <div class="github-fork-ribbon">
-<a href="https://github.com/calvinmetcalf/leaflet-fractal">Fork me on GitHub</a>
+<a href="https://github.com/aparshin/leaflet-fractal">Fork me on GitHub</a>
 </div>
 </div>
 	<div id="map"></div>
@@ -31,14 +31,14 @@
 	<script src="leaflet-hash.js"></script>
 	<script type="text/javascript">
         var map = L.map('map',{minZoom:1});
-
         
         var lc=L.control.layers({
             "mandlebrot":L.tileLayer.fractalLayer(6).addTo(map),
             "multibrot3":L.tileLayer.fractalLayer(6,"multibrot3"),
             "multibrot5":L.tileLayer.fractalLayer(6,"multibrot5"),
             "burning ship":L.tileLayer.fractalLayer(6,"burningShip"),
-            "tricorn":L.tileLayer.fractalLayer(6,"tricorn")
+            "tricorn":L.tileLayer.fractalLayer(6,"tricorn"),
+            "julia":L.tileLayer.fractalLayer(6,"julia")
         },{},{position:"topleft",collapsed:false}).addTo(map);
          map.setView([0, -90], 2).addHash({lc:lc});
       

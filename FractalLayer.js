@@ -1,5 +1,5 @@
 L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
-    options: {
+	options: {
 		async: true,
 		maxZoom:23,
         continuousWorld:true
@@ -11,7 +11,6 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
       
         this.messages={};
         this.queue={total:workers};
-   
 	},
     onAdd:function(map){
         var _this=this;
@@ -20,7 +19,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
         this.queue.free=[];
         this.queue.len =0;
         this.queue.tiles=[];
-		while(i<this.workers){
+    	while(i<this.workers){
             this.queue.free.push(i);
 		    this._workers[i]=new Worker("workers/"+this.fractalType+".js");
             this._workers[i].onmessage=function(e) {
@@ -37,7 +36,6 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
         }else{
             return;
         }
-        console.log(e.data.workerID+ " out "+e.data.tileID);
         	var array=new Uint8ClampedArray(e.data.pixels);
 			var ctx = canvas.getContext('2d');
 			var imagedata = ctx.getImageData(0, 0, 256, 256);
@@ -87,7 +85,6 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
         var tileID=tilePoint.x+":"+tilePoint.y+":"+z;
         this.messages[tileID]=canvas;
         this._workers[workerID].postMessage({x: tilePoint.x, y:tilePoint.y, z: z,tileID:tileID,workerID:workerID});
-        console.log(workerID + " in "+tileID);
     }
 });
 L.tileLayer.fractalLayer=function(workers,t){
