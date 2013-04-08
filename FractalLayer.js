@@ -5,8 +5,10 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 		continuousWorld:true
 	},
 	initialize: function (workers,fractal) {
+        this.messages={};
 	var fractalType,mi;
 		fractal=fractal||"mandlebrot";
+        var _this = this;
 	this.fractals = {
 		mandlebrot:{
 		fractalType:"xn = x*x - y*y + cx;\n\
@@ -47,6 +49,13 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 		communist.IEpath="ie.js";
 		this.workers=workers;
 		this.workerFunc=Mustache.render(this.template,this.fractals[fractal]);
+        this.on("tileunload", function(e) {
+            var pos = e.tile._tileIndex,
+                id = [pos.x, pos.y, pos.z].join(':');
+                if(id in _this.messages){
+                    delete _this.messages[id];
+                }
+        });
 		},
 		onAdd:function(map){
 		var _this = this;
@@ -70,14 +79,18 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 	drawTile: function (canvas, tilePoint) {
 		var _this = this,
 		z = this._map.getZoom();
+        var tileID=tilePoint.x+":"+tilePoint.y+":"+z;
+        _this.messages[tileID]=true;
 		canvas._tileIndex = {x: tilePoint.x, y: tilePoint.y, z: z};
-		this._workers[parseInt((Math.random()*this.workers),10)].data({x: tilePoint.x, y:tilePoint.y, z: z}).then(function(data) {
-			var array=new Uint8ClampedArray(data.pixels);
+		this._workers[parseInt((Math.random()*this.workers),10)].data({x: tilePoint.x, y:tilePoint.y, z: z,id:tileID}).then(function(data) {
+			 if(_this.messages[data.id]){
+            var array=new Uint8ClampedArray(data.pixels);
 			var ctx = canvas.getContext('2d');
 			var imagedata = ctx.getImageData(0, 0, 256, 256);
 			imagedata.data.set(array);
 			ctx.putImageData(imagedata, 0, 0);
 			_this.tileDrawn(canvas);
+			 };
 		});
 	},
 	template:"function(data,cb) {\n\
@@ -146,7 +159,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 	}\n\
 	var array = new Uint8ClampedArray(pixels);\n\
  			var buf = array.buffer;\n\
-	cb({pixels: buf}/*,[buf]*/);\n\
+	cb({pixels: buf,id:data.id}/*,[buf]*/);\n\
 }"
 });
 L.tileLayer.fractalLayer=function(workers,fractal){

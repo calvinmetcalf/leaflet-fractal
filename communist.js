@@ -103,7 +103,6 @@ function makeWorker(strings){
 	c.URL = c.URL||window.URL || window.webkitURL || self.URL;
 	if(window.communist.IEpath){
 		try{
-            console.log("try");
 			worker = new Worker(c.URL.createObjectURL(new Blob([script],{type: "text/javascript"})));	
 		} catch(e){
 			worker = new Worker(window.communist.IEpath);
