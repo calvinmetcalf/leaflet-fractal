@@ -1,5 +1,3 @@
-
-
 L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 	options: {
 		async: true,
@@ -46,7 +44,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 }
 
 
-		window.communist.IEpath="ie.js";
+		communist.IEpath="ie.js";
 		this.workers=workers;
 		this.workerFunc=Mustache.render(this.template,this.fractals[fractal]);
 		},

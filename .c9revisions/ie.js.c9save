@@ -1,0 +1,2 @@
+{"ts":1365421786189,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1365421805885,"patch":[[{"diffs":[[1,"self.onmessage=function(e){\r\n    eval(e.data);\t\r\n}"]],"start1":0,"start2":0,"length1":0,"length2":50}]],"length":50,"saved":false}
