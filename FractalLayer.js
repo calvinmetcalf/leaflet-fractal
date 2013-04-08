@@ -10,7 +10,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 		this._workers = new Array(this.workers);
       
         this.messages={};
-        this.queue={len:0,tiles:[],total:workers};
+        this.queue={total:workers};
    
 	},
     onAdd:function(map){
@@ -18,6 +18,8 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     	var i = 0;
         var next;
         this.queue.free=[];
+        this.queue.len =0;
+        this.queue.tiles=[];
 		while(i<this.workers){
             this.queue.free.push(i);
 		    this._workers[i]=new Worker("workers/"+this.fractalType+".js");
