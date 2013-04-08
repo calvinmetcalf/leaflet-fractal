@@ -146,7 +146,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 	}\n\
 	var array = new Uint8ClampedArray(pixels);\n\
  			var buf = array.buffer;\n\
-	cb({pixels: buf},[buf]);\n\
+	cb({pixels: buf}/*,[buf]*/);\n\
 }"
 });
 L.tileLayer.fractalLayer=function(workers,fractal){
