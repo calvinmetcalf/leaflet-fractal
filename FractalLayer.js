@@ -1,3 +1,5 @@
+communist.IEpath="ie.js";
+
 L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 	options: {
 		async: true,
