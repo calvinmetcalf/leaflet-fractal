@@ -1,4 +1,4 @@
-communist.IEpath="ie.js";
+
 
 L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 	options: {
@@ -46,7 +46,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 }
 
 
-		
+		window.communist.IEpath="ie.js";
 		this.workers=workers;
 		this.workerFunc=Mustache.render(this.template,this.fractals[fractal]);
 		},
