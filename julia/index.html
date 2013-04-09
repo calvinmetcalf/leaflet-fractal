@@ -84,12 +84,21 @@ formChange:function(map,defaults){
         }else{
              this.formChange(map,true);
         }
-        
+        var _this=this;
+        window.onpopstate = function(event) {
+            if(event.state){
+           document.getElementById("cr").value=event.state.cr;
+        document.getElementById("ci").value=event.state.ci;
+         document.getElementById("iter").value=event.state.iterations;
+         map.removeLayer(_this.layer);
+          _this.layer = L.tileLayer.fractalLayer(6,"julia",event.state.iterations,event.state.cr,event.state.ci).addTo(map);
+        }};
        
         var crLabel = L.DomUtil.create("label","juliaLabel",form);
         crLabel.setAttribute("for","cr");
         crLabel.innerHTML="R: ";
         var cr = L.DomUtil.create("input","juliaInput",form);
+        cr.setAttribute('id','cr');
         cr.setAttribute('type','number');
         cr.setAttribute('name','cr');
         cr.setAttribute('value',defaultCr);
@@ -103,6 +112,7 @@ formChange:function(map,defaults){
         var ci = L.DomUtil.create("input","juliaInput",form);
         ci.setAttribute('type','number');
         ci.setAttribute('name','ci');
+        ci.setAttribute('id','ci');
         ci.setAttribute('value',defaultCi);
         ci.setAttribute('min','-2');
         ci.setAttribute('max','2');
@@ -117,6 +127,7 @@ formChange:function(map,defaults){
         iter.setAttribute('value',defaultIter);
         iter.setAttribute('step','100');
         iter.setAttribute('min','0');
+        iter.setAttribute('id','iter');
 if (!L.Browser.touch) {
     		L.DomEvent.disableClickPropagation(container);
 			L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
