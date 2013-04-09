@@ -48,7 +48,6 @@ formChange:function(map){
         if(this.layer){
         map.removeLayer(this.layer);
         }
-        console.log(values);
         this.layer = L.tileLayer.fractalLayer(6,"julia",values.iterations,values.cr,values.ci).addTo(map);
     },
     onAdd: function (map) {

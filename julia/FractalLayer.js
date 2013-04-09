@@ -11,8 +11,8 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
       
         this.messages={};
         this.queue={total:workers};
-        this.cr =cr || -0.74543;
-        this.ci = ci ||0.11301;
+        this.cr =cr || -0.37;
+        this.ci = ci ||0.6;
         this.maxIter=maxIter||500;
 	},
     onAdd:function(map){
