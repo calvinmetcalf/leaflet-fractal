@@ -3,19 +3,20 @@
 <head>
 	<title>Leaflet TileLayer.Canvas with Web Workers example</title>
 
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+   
 
-	<script src="FractalLayer.js"></script>
-    
+
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
     <style>
         body, html, #map {
             width: 100%;
             height: 100%;
             margin: 0px;
         }
-        
-    </style>
+        .leaflet-control-layers label {
+            display:inline;
+        }
+    </style>   
     	<!--Fork Me on Github ribbon, we're using the awsome version from simonwhitaker available at https://github.com/simonwhitaker/github-fork-ribbon-css -->
 <link rel="stylesheet" href="../gh-fork-ribbon.css" />
 </head>
@@ -29,7 +30,7 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
 	<script src="FractalLayer.js"></script>
 	<script type="text/javascript">
-        var map = L.map('map',{minZoom:1,zoomControl:false}).setView([0, -90], 2);
+        var map = L.map('map',{minZoom:1,zoomControl:false}).setView([0,0], 2);
         
       var JuliaControl = L.Control.extend({
     options: {
@@ -83,23 +84,34 @@ formChange:function(map,defaults){
         }else{
              this.formChange(map,true);
         }
-        var ol = L.DomUtil.create("ul","jessicaList", form);
-        var cr = L.DomUtil.create("input","juliaInput",L.DomUtil.create("li","item", ol));
+        
+       
+        var crLabel = L.DomUtil.create("label","juliaLabel",form);
+        crLabel.setAttribute("for","cr");
+        crLabel.innerHTML="R: ";
+        var cr = L.DomUtil.create("input","juliaInput",form);
         cr.setAttribute('type','number');
         cr.setAttribute('name','cr');
         cr.setAttribute('value',defaultCr);
         cr.setAttribute('min','-2');
         cr.setAttribute('max','2');
         cr.setAttribute('step','0.001');
-        var ci = L.DomUtil.create("input","juliaInput",L.DomUtil.create("li","item", ol));
+       
+        var ciLabel = L.DomUtil.create("label","juliaLabel",form);
+        ciLabel.setAttribute("for","ci");
+        ciLabel.innerHTML="I: ";
+        var ci = L.DomUtil.create("input","juliaInput",form);
         ci.setAttribute('type','number');
         ci.setAttribute('name','ci');
         ci.setAttribute('value',defaultCi);
         ci.setAttribute('min','-2');
         ci.setAttribute('max','2');
         ci.setAttribute('step','0.001');
-        
-        var iter = L.DomUtil.create("input","juliaInput",L.DomUtil.create("li","item", ol));
+       
+         var iterLabel = L.DomUtil.create("label","juliaLabel",form);
+        iterLabel.setAttribute("for","iterations");
+        iterLabel.innerHTML="Iterations: ";
+        var iter = L.DomUtil.create("input","juliaInput",form);
          iter.setAttribute('type','number');
         iter.setAttribute('name','iterations');
         iter.setAttribute('value',defaultIter);
