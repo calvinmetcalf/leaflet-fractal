@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet TileLayer.Canvas with Web Workers example</title>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+
+	<script src="FractalLayer.js"></script>
+    
+    <style>
+        body, html, #map {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+        }
+        
+    </style>
+    	<!--Fork Me on Github ribbon, we're using the awsome version from simonwhitaker available at https://github.com/simonwhitaker/github-fork-ribbon-css -->
+<link rel="stylesheet" href="../gh-fork-ribbon.css" />
+</head>
+
+<body>	<div class="github-fork-ribbon-wrapper right">
+<div class="github-fork-ribbon">
+<a href="https://github.com/calvinmetcalf/leaflet-fractal">Fork me on GitHub</a>
+</div>
+</div>
+	<div id="map"></div>
+<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+	<script src="FractalLayer.js"></script>
+	<script src="../leaflet-hash.js"></script>
+	<script type="text/javascript">var d;
+        var map = L.map('map',{minZoom:1,zoomControl:false}).setView([0, -90], 2).addHash();
+        
+      var JuliaControl = L.Control.extend({
+    options: {
+        position: 'topleft'
+    },
+formChange:function(map){
+        var values={};
+        var inputs = document.getElementsByTagName("input");
+        var len = inputs.length;
+        var i = 0;
+        while(i<len){
+            values[inputs[i].name]=parseFloat(inputs[i].value,10);
+            i++;
+        }
+        if(this.layer){
+        map.removeLayer(this.layer);
+        }
+        console.log(values);
+        this.layer = L.tileLayer.fractalLayer(6,"julia",values.iterations,values.cr,values.ci).addTo(map);
+    },
+    onAdd: function (map) {
+        // create the control container with a particular class name
+        var container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control-layers-expanded leaflet-control');
+        // ... initialize other DOM elements, add listeners, etc.
+        var form = L.DomUtil.create("form","juliaForm", container);
+        //form.dispatchFormChange()
+        L.DomEvent.addListener(form,"change",function(e){
+           this.formChange(map);
+        },this);
+        this.formChange(map);
+        var ol = L.DomUtil.create("ul","jessicaList", form);
+        var cr = L.DomUtil.create("input","juliaInput",L.DomUtil.create("li","item", ol));
+        cr.setAttribute('type','number');
+        cr.setAttribute('name','cr');
+        cr.setAttribute('value','-0.37');
+        cr.setAttribute('min','-2');
+        cr.setAttribute('max','2');
+        cr.setAttribute('step','0.001');
+        var ci = L.DomUtil.create("input","juliaInput",L.DomUtil.create("li","item", ol));
+        ci.setAttribute('type','number');
+        ci.setAttribute('name','ci');
+        ci.setAttribute('value','0.6');
+        ci.setAttribute('min','-2');
+        ci.setAttribute('max','2');
+        ci.setAttribute('step','0.001');
+        
+        var iter = L.DomUtil.create("input","juliaInput",L.DomUtil.create("li","item", ol));
+         iter.setAttribute('type','number');
+        iter.setAttribute('name','iterations');
+        iter.setAttribute('value','500');
+        iter.setAttribute('step','100');
+        iter.setAttribute('min','0');
+if (!L.Browser.touch) {
+    		L.DomEvent.disableClickPropagation(container);
+			L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
+		} else {
+			L.DomEvent.on(container, 'click', L.DomEvent.stopPropagation);
+		}
+       
+        return container;
+    }
+    
+    
+});
+
+map.addControl(new JuliaControl());
+	</script>
+</body>
+</html>
