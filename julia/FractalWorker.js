@@ -30,6 +30,22 @@ var fractalFunctions = {
         
         return iter;
     },
+    'multibrot': function(cx, cy, maxIter, cr) {
+        var iter, xn, yn, x = 0, y = 0,n1,n2;
+        for (iter = 0; iter < maxIter; iter++) {
+            n1=Math.pow((x*x+y*y),(cr>>1));
+            n2=cr*Math.atan2(y,x);
+            xn=n1*Math.cos(n2) + cx;
+            yn=n1*Math.sin(n2) + cy;
+            if (xn*xn + yn*yn > 4) {
+                break;
+            }
+            x = xn;
+            y = yn;
+        }
+        
+        return iter;
+    },
     'multibrot3': function(cx, cy, maxIter) {
         var iter, xn, yn, x = 0, y = 0;
         for (iter = 0; iter < maxIter; iter++) {
@@ -93,7 +109,7 @@ var workerFunc = function(data,cb) {
     var x0 = data.x / scale - 1;
     var y0 = data.y / scale - 1;
     var d = 1/(scale<<8);
-    var pixels = new Array(262144);
+    var pixels = new Array(65536);
     var MAX_ITER=data.maxIter;
     var c,cx,cy,iter,iii=0;
     for (var py = 0; py < 256; py++) {
@@ -104,13 +120,10 @@ var workerFunc = function(data,cb) {
             iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
             
             c = Math.floor((iter/MAX_ITER)*360);
-            pixels[iii++] = colors[c][0];
-            pixels[iii++] = colors[c][1];
-            pixels[iii++] = colors[c][2];
-            pixels[iii++] = 255;
+            pixels[iii++] = colors[c];
         }
     }
-    var array = new Uint8ClampedArray(pixels);
+    var array = new Uint32Array(pixels);
     data.pixels = array.buffer;
     cb(data,[data.pixels]);
 }
