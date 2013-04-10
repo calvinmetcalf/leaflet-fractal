@@ -1,5 +1,5 @@
 L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
-	options: {
+    options: {
 		async: true,
 		maxZoom:23,
         continuousWorld:true

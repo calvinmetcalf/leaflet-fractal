@@ -33,12 +33,15 @@
 	<script type="text/javascript">
         var map = L.map('map', {minZoom:1});
         
-        var numWorkers = 3;
+        var numWorkers = 6;
         
         var lc=L.control.layers({
             "mandlebrot":L.tileLayer.fractalLayer(numWorkers).addTo(map),
-            "multibrot3":L.tileLayer.fractalLayer(numWorkers,"multibrot3",300),
-            <!--Dosn't work at the moment"multibrot5":L.tileLayer.fractalLayer(6,"multibrot5",200),-->
+            "multibrot3":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,3),
+            "multibrot4":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,4),
+            "multibrot5":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,5),
+            "multibrot-1":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,-1),
+            "multibrot-2":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,-2),
             "burning ship":L.tileLayer.fractalLayer(numWorkers,"burningShip"),
             "tricorn":L.tileLayer.fractalLayer(numWorkers,"tricorn"),
             "julia -0.74543+0.11301*i":L.tileLayer.fractalLayer(numWorkers,"julia"),
