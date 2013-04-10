@@ -37,11 +37,9 @@
         
         var lc=L.control.layers({
             "mandlebrot":L.tileLayer.fractalLayer(numWorkers).addTo(map),
-            "multibrot3":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,3),
-            "multibrot4":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,4),
-            "multibrot5":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,5),
-            "multibrot-1":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,-1),
-            "multibrot-2":L.tileLayer.fractalLayer(numWorkers,"multibrot",300,-2),
+            "multibrot3":L.tileLayer.fractalLayer(numWorkers,"multibrot3",300,3),
+            "multibrot4":L.tileLayer.fractalLayer(numWorkers,"multibrot",200,4),
+            "multibrot5":L.tileLayer.fractalLayer(numWorkers,"multibrot5",100,5),
             "burning ship":L.tileLayer.fractalLayer(numWorkers,"burningShip"),
             "tricorn":L.tileLayer.fractalLayer(numWorkers,"tricorn"),
             "julia -0.74543+0.11301*i":L.tileLayer.fractalLayer(numWorkers,"julia"),

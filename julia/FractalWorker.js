@@ -111,7 +111,8 @@ var workerFunc = function(data,cb) {
     var d = 1/(scale<<8);
     var pixels = new Array(65536);
     var MAX_ITER=data.maxIter;
-    var c,cx,cy,iter,i=0,px,py;
+    var c,cx,cy,iter,i=0,px,py,a1,a2,a3,a4;
+    
     while (i < 65536) {
         px = i%256;
         py = (i-px)>>8;
@@ -120,6 +121,49 @@ var workerFunc = function(data,cb) {
         iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
         c = Math.floor((iter/MAX_ITER)*360);
         pixels[i++] = colors[c];
+        pixels[i++] = colors[c];
+    }
+    i=1;
+    while (i < 65536) {
+        px = i%256;
+        py = (i-px)>>8;
+        cx = x0 + px*d;
+        cy = y0 + py*d;
+        switch(0){
+            case px:
+                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
+                c = Math.floor((iter/MAX_ITER)*360);
+                pixels[i++] = colors[c];
+                break;
+            case py:
+                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
+                c = Math.floor((iter/MAX_ITER)*360);
+                pixels[i++] = colors[c];
+                break;
+            case px%255:
+                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
+                c = Math.floor((iter/MAX_ITER)*360);
+                pixels[i++] = colors[c];
+                break;
+            case py%255:
+                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
+                c = Math.floor((iter/MAX_ITER)*360);
+                pixels[i++] = colors[c];
+                break;
+            default:
+                a1=pixels[i+1];
+                a2=pixels[i-1];
+                a3=pixels[i+256];
+                a4=pixels[i-256];
+                if(a1===a2&&a2===a3&&a3===a4){
+                    i++;
+                }else{
+                    iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
+                    c = Math.floor((iter/MAX_ITER)*360);
+                    pixels[i++] = colors[c];           
+                }
+            }
+        i++;
     }
     var array = new Uint32Array(pixels);
     data.pixels = array.buffer;
