@@ -129,28 +129,12 @@ var workerFunc = function(data,cb) {
         py = (i-px)>>8;
         cx = x0 + px*d;
         cy = y0 + py*d;
-        switch(0){
-            case px:
-                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
-                c = ~~((iter/MAX_ITER)*360);
-                pixels[i++] = colors[c];
-                break;
-            case py:
-                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
-                c = ~~((iter/MAX_ITER)*360);
-                pixels[i++] = colors[c];
-                break;
-            case px%255:
-                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
-                c = ~~((iter/MAX_ITER)*360);
-                pixels[i++] = colors[c];
-                break;
-            case py%255:
-                iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
-                c = ~~((iter/MAX_ITER)*360);
-                pixels[i++] = colors[c];
-                break;
-            default:
+        if(!px||!py||!px%255||py%255){
+            iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
+            c = ~~((iter/MAX_ITER)*360);
+            pixels[i++] = colors[c];
+        }
+        else{
                 a1=pixels[i+1];
                 a2=pixels[i-1];
                 a3=pixels[i+256];
