@@ -138,8 +138,8 @@ fractalModule =function(stdlib){
         var iter=0;
         var xn= 0.0;
         var x = 0.0;
-        x = cx;
         var y = 0.0;
+        x = cx;
         y = cy;
         while ( ((pow(x,2.0) + pow(y,2.0)) < 4.0)&((iter|0) < (maxIter|0))) {
             xn = pow(x,2.0) - pow(y,2.0) + cr;
