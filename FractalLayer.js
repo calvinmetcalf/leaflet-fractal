@@ -51,7 +51,7 @@ fractalModule =function(stdlib){
         cx = +cx;
         cy = +cy;
         maxIter = maxIter|0;
-        cr = cr|0;
+        cr = +cr;
         var iter=0;
         var xn= 0.0;
         var x = 0.0;
@@ -67,7 +67,7 @@ fractalModule =function(stdlib){
                 n3 = +(pow(x,2.0)+pow(y,2.0));
                 continue;
             }
-            n1=pow(n3,(cr>>1));
+            n1=pow(n3,(cr/1.0));
             n2=cr*atan2(y,x);
             xn=n1*cos(n2) + cx;
             y=n1*sin(n2) + cy;
