@@ -21,7 +21,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (pow(x,2) + pow(y,2)) < 4&&(iter|0) < (maxIter|0)) {
+        while ( ((pow(x,2) + pow(y,2)) < 4)&&((iter|0) < (maxIter|0))) {
             xn = +( pow(x,2) - pow(y,2) + cx);
             y = +((x*y)*2 + cy);
             x = +xn;
@@ -38,7 +38,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (pow(x,2) + pow(y,2)) < 4&&(iter|0) < (maxIter|0)) {
+        while ( ((pow(x,2) + pow(y,2)) < 4)&&((iter|0) < (maxIter|0))) {
             xn =  pow(x,2) - pow(y,2) - cx;
             y = abs(x*y)*2 + cy;
             x = xn;
@@ -85,7 +85,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (pow(x,2) + pow(y,2)) < 4&&(iter|0) < (maxIter|0)) {
+        while ( ((pow(x,2) + pow(y,2)) < 4)&&((iter|0) < (maxIter|0))) {
             xn=pow(x,3)-3*x*pow(y,2) + cx;
             y=3*pow(x,2)*y-pow(y,3) + cy;
             x = xn;
@@ -102,7 +102,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( +(pow(x,2) + pow(y,2)) < 4&&(iter|0) < (maxIter|0)) {
+        while ( ((pow(x,2) + pow(y,2)) < 4)&&((iter|0) < (maxIter|0))) {
             xn=pow(x,5)-(10*pow(x,3)*pow(y,2))+(5*x*pow(y,4)) + cx;
             y=(5*pow(x,4)*y)-(10*pow(x,2)*pow(y,3))+pow(y,5) + cy;
             x = xn;
@@ -119,7 +119,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (pow(x,2) + pow(y,2)) < 4&&(iter|0) < (maxIter|0)) {
+        while ( ((pow(x,2) + pow(y,2)) < 4)&&((iter|0) < (maxIter|0))) {
             xn =  pow(x,2) - pow(y,2) - cx;
             y =(x+x)*(-y) + cy;
             x = xn;
@@ -138,7 +138,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = +cx;
         var y = +cy;
-        while ( (pow(x,2) + pow(y,2)) < 4&&(iter|0) < (maxIter|0)) {
+        while ( ((pow(x,2) + pow(y,2)) < 4)&&((iter|0) < (maxIter|0))) {
             xn = pow(x,2) - pow(y,2) + cr;
             y = (x*y)*2 + ci;
             x = xn;
