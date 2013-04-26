@@ -149,16 +149,16 @@ fractalModule =function(stdlib){
         return iter|0;
     }
     return {
-    'mandlebrot': mandlebrot,
-    'burningShip': burningShip,
-    'multibrot': multibrot,
-    'multibrot3': multibrot3,
-   'multibrot5': multibrot5,
-    'tricorn': tricorn,
-    'julia': julia
-}
+    mandlebrot: mandlebrot,
+    burningShip: burningShip,
+    multibrot: multibrot,
+    multibrot3: multibrot3,
+   multibrot5: multibrot5,
+    tricorn: tricorn,
+    julia: julia
+};
 
-}
+};
 fractalFunctions=fractalModule(self);
 workerFunc = function(data,cb) {
     var scale = Math.pow(2, data.z - 1);
