@@ -61,7 +61,7 @@ fractalModule =function(stdlib){
         var n3 = 0.0;
         n3 = +(pow(x,2.0)+pow(y,2.0));
         while (+n3 < 4.0 & (iter|0) < (maxIter|0)) {
-            if(!n3){
+            if(n3==0.0){
                 x=+cx;
                 y=+cy;
                 n3 = +(pow(x,2.0)+pow(y,2.0));
