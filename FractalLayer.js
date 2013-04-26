@@ -21,8 +21,8 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2) + pow(y,2)) < 4)&((iter|0) < (maxIter|0))) {
-            xn = +( pow(x,2) - pow(y,2) + cx);
+        while ( ((pow(x,2.0) + pow(y,2.0)) < 4)&((iter|0) < (maxIter|0))) {
+            xn = +( pow(x,2.0) - pow(y,2.0) + cx);
             y = +((x*y)*2 + cy);
             x = +xn;
             iter=(iter+1)|0;
@@ -38,8 +38,8 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2) + pow(y,2)) < 4)&((iter|0) < (maxIter|0))) {
-            xn =  pow(x,2) - pow(y,2) - cx;
+        while ( ((pow(x,2.0) + pow(y,2.0)) < 4)&((iter|0) < (maxIter|0))) {
+            xn =  pow(x,2.0) - pow(y,2.0) - cx;
             y = abs(x*y)*2 + cy;
             x = xn;
             iter=(iter+1)|0;
@@ -58,12 +58,12 @@ fractalModule =function(stdlib){
         var y = 0.0;
         var n1 = 0.0;
         var n2 = 0.0;
-        var n3 = +(pow(x,2)+pow(y,2));
+        var n3 = +(pow(x,2.0)+pow(y,2.0));
         while (+n3 < 4 & (iter|0) < (maxIter|0)) {
             if(!n3){
                 x=+cx;
                 y=+cy;
-                n3 = +(pow(x,2)+pow(y,2));
+                n3 = +(pow(x,2.0)+pow(y,2.0));
                 continue;
             }
             n1=pow(n3,(cr>>1));
@@ -71,7 +71,7 @@ fractalModule =function(stdlib){
             xn=n1*cos(n2) + cx;
             y=n1*sin(n2) + cy;
             x = xn;
-            n3=(pow(x,2)+pow(y,2));
+            n3=(pow(x,2.0)+pow(y,2.0));
             iter=(iter+1)|0;
         }
         
@@ -85,9 +85,9 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2) + pow(y,2)) < 4)&((iter|0) < (maxIter|0))) {
-            xn=pow(x,3)-3*x*pow(y,2) + cx;
-            y=3*pow(x,2)*y-pow(y,3) + cy;
+        while ( ((pow(x,2.0) + pow(y,2.0)) < 4)&((iter|0) < (maxIter|0))) {
+            xn=pow(x,3.0)-3*x*pow(y,2.0) + cx;
+            y=3*pow(x,2.0)*y-pow(y,3.0) + cy;
             x = xn;
             iter=(iter+1)|0;
         }
@@ -102,9 +102,9 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2) + pow(y,2)) < 4)&((iter|0) < (maxIter|0))) {
-            xn=pow(x,5)-(10*pow(x,3)*pow(y,2))+(5*x*pow(y,4)) + cx;
-            y=(5*pow(x,4)*y)-(10*pow(x,2)*pow(y,3))+pow(y,5) + cy;
+        while ( ((pow(x,2.0) + pow(y,2.0)) < 4)&((iter|0) < (maxIter|0))) {
+            xn=pow(x,5.0)-(10*pow(x,3.0)*pow(y,2.0))+(5*x*pow(y,4.0)) + cx;
+            y=(5*pow(x,4.0)*y)-(10*pow(x,2.0)*pow(y,3.0))+pow(y,5.0) + cy;
             x = xn;
             iter=(iter+1)|0;
         }
@@ -119,8 +119,8 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2) + pow(y,2)) < 4)&((iter|0) < (maxIter|0))) {
-            xn =  pow(x,2) - pow(y,2) - cx;
+        while ( ((pow(x,2.0) + pow(y,2.0)) < 4)&((iter|0) < (maxIter|0))) {
+            xn =  pow(x,2.0) - pow(y,2.0) - cx;
             y =(x+x)*(-y) + cy;
             x = xn;
             iter=(iter+1)|0;
@@ -138,8 +138,8 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = +cx;
         var y = +cy;
-        while ( ((pow(x,2) + pow(y,2)) < 4)&((iter|0) < (maxIter|0))) {
-            xn = pow(x,2) - pow(y,2) + cr;
+        while ( ((pow(x,2.0) + pow(y,2.0)) < 4)&((iter|0) < (maxIter|0))) {
+            xn = pow(x,2.0) - pow(y,2.0) + cr;
             y = (x*y)*2 + ci;
             x = xn;
             iter=(iter+1)|0;
