@@ -21,8 +21,8 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2.0) + pow(y,2.0)) < 4.0)&((iter|0) < (maxIter|0))) {
-            xn = +( pow(x,2.0) - pow(y,2.0) + cx);
+        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+            xn = +( (x*x) - (y*y) + cx);
             y = +((x*y)*2.0 + cy);
             x = +xn;
             iter=(iter+1)|0;
@@ -38,8 +38,8 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2.0) + pow(y,2.0)) < 4.0)&((iter|0) < (maxIter|0))) {
-            xn =  pow(x,2.0) - pow(y,2.0) - cx;
+        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+            xn =  (x*x) - (y*y) - cx;
             y = abs(x*y)*2.0 + cy;
             x = xn;
             iter=(iter+1)|0;
@@ -59,12 +59,12 @@ fractalModule =function(stdlib){
         var n1 = 0.0;
         var n2 = 0.0;
         var n3 = 0.0;
-        n3 = +(pow(x,2.0)+pow(y,2.0));
+        n3 = +((x*x)+(y*y));
         while (+n3 < 4.0 & (iter|0) < (maxIter|0)) {
             if(n3==0.0){
                 x=+cx;
                 y=+cy;
-                n3 = +(pow(x,2.0)+pow(y,2.0));
+                n3 = +((x*x)+(y*y));
                 continue;
             }
             n1=pow(n3,(cr/1.0));
@@ -72,7 +72,7 @@ fractalModule =function(stdlib){
             xn=n1*cos(n2) + cx;
             y=n1*sin(n2) + cy;
             x = xn;
-            n3=(pow(x,2.0)+pow(y,2.0));
+            n3=((x*x)+(y*y));
             iter=(iter+1)|0;
         }
         
@@ -86,9 +86,9 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2.0) + pow(y,2.0)) < 4.0)&((iter|0) < (maxIter|0))) {
-            xn=pow(x,3.0)-3.0*x*pow(y,2.0) + cx;
-            y=3.0*pow(x,2.0)*y-pow(y,3.0) + cy;
+        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+            xn=pow(x,3.0)-3.0*x*(y*y) + cx;
+            y=3.0*(x*x)*y-pow(y,3.0) + cy;
             x = xn;
             iter=(iter+1)|0;
         }
@@ -103,9 +103,9 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2.0) + pow(y,2.0)) < 4.0)&((iter|0) < (maxIter|0))) {
-            xn=pow(x,5.0)-(10.0*pow(x,3.0)*pow(y,2.0))+(5.0*x*pow(y,4.0)) + cx;
-            y=(5.0*pow(x,4.0)*y)-(10.0*pow(x,2.0)*pow(y,3.0))+pow(y,5.0) + cy;
+        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+            xn=pow(x,5.0)-(10.0*pow(x,3.0)*(y*y))+(5.0*x*pow(y,4.0)) + cx;
+            y=(5.0*pow(x,4.0)*y)-(10.0*(x*x)*pow(y,3.0))+pow(y,5.0) + cy;
             x = xn;
             iter=(iter+1)|0;
         }
@@ -120,8 +120,8 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( ((pow(x,2.0) + pow(y,2.0)) < 4.0)&((iter|0) < (maxIter|0))) {
-            xn =  pow(x,2.0) - pow(y,2.0) - cx;
+        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+            xn =  (x*x) - (y*y) - cx;
             y =(x+x)*(-y) + cy;
             x = xn;
             iter=(iter+1)|0;
@@ -141,8 +141,8 @@ fractalModule =function(stdlib){
         var y = 0.0;
         x = cx;
         y = cy;
-        while ( ((pow(x,2.0) + pow(y,2.0)) < 4.0)&((iter|0) < (maxIter|0))) {
-            xn = pow(x,2.0) - pow(y,2.0) + cr;
+        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+            xn = (x*x) - (y*y) + cr;
             y = (x*y)*2.0 + ci;
             x = xn;
             iter=(iter+1)|0;
@@ -321,7 +321,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     	canvas._tileIndex = {x: tilePoint.x, y: tilePoint.y, z: z};
         var tileID=tilePoint.x+":"+tilePoint.y+":"+z;
         this.messages[tileID]=canvas;
-        this._workers[workerID].postMessage({
+        var msg = {
             x: tilePoint.x, 
             y:tilePoint.y, 
             z: z,
@@ -331,7 +331,9 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
             ci: this.ci,
             maxIter: this.maxIter,
             type: this.fractalType
-        });
+        };
+        console.log(JSON.stringify(msg));
+        this._workers[workerID].postMessage(msg);
     }
 });
 L.tileLayer.fractalLayer = function(numWorkers,t,mi,cr,ci){
