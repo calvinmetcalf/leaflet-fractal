@@ -7,7 +7,7 @@ colors=new Uint32Array([4281282495,4281283263,4281283775,4281284287,4281285055,4
 
 //functions return number from 0 to (maxIter-1)
 fractalModule =function(stdlib){
-   // "use asm";
+    "use asm";
     var pow = stdlib.Math.pow;
     var abs = stdlib.Math.abs;
     var atan2 = stdlib.Math.atan2;
