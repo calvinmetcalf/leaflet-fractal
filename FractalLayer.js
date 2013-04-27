@@ -7,7 +7,7 @@ colors=new Uint32Array([4281282495,4281283263,4281283775,4281284287,4281285055,4
 
 //functions return number from 0 to (maxIter-1)
 fractalModule =function(stdlib){
-    "use asm";
+   // "use asm";
     var pow = stdlib.Math.pow;
     var abs = stdlib.Math.abs;
     var atan2 = stdlib.Math.atan2;
@@ -258,6 +258,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
             this.queue.free.push(i);
 		    this._workers[i]=new Worker(this.workerPath);
             this._workers[i].onmessage=function(e) {
+                console.log(Date.now()-e.data.start+":"+e.data.tileID)
                 var canvas;
                 if(_this.queue.len) {
                     _this.queue.len--;
@@ -330,9 +331,9 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
             cr: this.cr,
             ci: this.ci,
             maxIter: this.maxIter,
-            type: this.fractalType
+            type: this.fractalType,
+            start:Date.now()
         };
-        console.log(JSON.stringify(msg));
         this._workers[workerID].postMessage(msg);
     }
 });
