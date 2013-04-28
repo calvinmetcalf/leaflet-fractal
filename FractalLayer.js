@@ -13,6 +13,17 @@ fractalModule =function(stdlib){
     var atan2 = stdlib.Math.atan2;
     var cos = stdlib.Math.cos;
     var sin = stdlib.Math.sin;
+    function testIt(x,y,iter,maxIter){
+        x = +x;
+        y = +y;
+        iter = iter|0;
+        maxIter=maxIter|0;
+        var out = 0;
+        out = ((x*x) + (y*y)) < 4.0;
+        if(out){
+            out =((iter|0) < (maxIter|0))|0;
+        }
+    return out|0;}
     function mandlebrot(cx, cy, maxIter) {
        cx = +cx;
         cy = +cy;
@@ -21,7 +32,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+        while (testIt(x,y,iter,maxIter)) {
             xn = +( (x*x) - (y*y) + cx);
             y = +((x*y)*2.0 + cy);
             x = +xn;
@@ -38,7 +49,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+        while (testIt(x,y,iter,maxIter)) {
             xn =  (x*x) - (y*y) - cx;
             y = abs(x*y)*2.0 + cy;
             x = xn;
@@ -86,7 +97,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+        while (testIt(x,y,iter,maxIter)) {
             xn=pow(x,3.0)-3.0*x*(y*y) + cx;
             y=3.0*(x*x)*y-pow(y,3.0) + cy;
             x = xn;
@@ -103,7 +114,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+        while (testIt(x,y,iter,maxIter)) {
             xn=pow(x,5.0)-(10.0*pow(x,3.0)*(y*y))+(5.0*x*pow(y,4.0)) + cx;
             y=(5.0*pow(x,4.0)*y)-(10.0*(x*x)*pow(y,3.0))+pow(y,5.0) + cy;
             x = xn;
@@ -120,7 +131,7 @@ fractalModule =function(stdlib){
         var xn= 0.0;
         var x = 0.0;
         var y = 0.0;
-        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+        while (testIt(x,y,iter,maxIter)) {
             xn =  (x*x) - (y*y) - cx;
             y =(x+x)*(-y) + cy;
             x = xn;
@@ -141,7 +152,7 @@ fractalModule =function(stdlib){
         var y = 0.0;
         x = cx;
         y = cy;
-        while ( (((x*x) + (y*y)) < 4.0)&((iter|0) < (maxIter|0))) {
+        while (testIt(x,y,iter,maxIter)) {
             xn = (x*x) - (y*y) + cr;
             y = (x*y)*2.0 + ci;
             x = xn;
