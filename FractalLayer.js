@@ -1,5 +1,3 @@
-//fork of original by Alexander Parshin (https://github.com/aparshin), submited with his permision
-
 var colors,fractalFunctions,workerFunc, fractalModule;
 
 if(typeof document === "undefined"){
