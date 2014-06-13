@@ -221,6 +221,9 @@ if (typeof document === "undefined") {
       this.cr = cr || -0.74543;
       this.ci = ci || 0.11301;
       this.maxIter = maxIter || 500;
+      this.cache = LRUCache({
+        max: 500
+      });
       var scripts = document.getElementsByTagName("script");
       var len = scripts.length;
       var i = 0;
@@ -239,32 +242,33 @@ if (typeof document === "undefined") {
       this.queue.free = [];
       this.queue.len = 0;
       this.queue.tiles = [];
+      function onWorker(e) {
+        console.log(Date.now() - e.data.start + ":" + e.data.tileID);
+        var canvas;
+        if (_this.queue.len) {
+          _this.queue.len--;
+          next = _this.queue.tiles.shift();
+          _this._renderTile(next[0], next[1], e.data.workerID);
+        } else {
+          _this.queue.free.push(e.data.workerID);
+        }
+        if (e.data.tileID in _this.messages) {
+          canvas = _this.messages[e.data.tileID];
+        } else {
+          return;
+        }
+        _this.cache.set(e.data.tileID, e.data);
+        var array = new Uint8Array(e.data.pixels);
+        var ctx = canvas.getContext('2d');
+        var imagedata = ctx.getImageData(0, 0, 256, 256);
+        imagedata.data.set(array);
+        ctx.putImageData(imagedata, 0, 0);
+        _this.tileDrawn(canvas);
+      }
       while (i < this.numWorkers) {
         this.queue.free.push(i);
         this._workers[i] = new Worker(this.workerPath);
-        this._workers[i].onmessage = function (e) {
-          console.log(Date.now() - e.data.start + ":" + e.data.tileID);
-          var canvas;
-          if (_this.queue.len) {
-            _this.queue.len--;
-            next = _this.queue.tiles.shift();
-            _this._renderTile(next[0], next[1], e.data.workerID);
-          } else {
-            _this.queue.free.push(e.data.workerID);
-          }
-          if (e.data.tileID in _this.messages) {
-            canvas = _this.messages[e.data.tileID];
-          } else {
-            return;
-          }
-
-          var array = new Uint8Array(e.data.pixels);
-          var ctx = canvas.getContext('2d');
-          var imagedata = ctx.getImageData(0, 0, 256, 256);
-          imagedata.data.set(array);
-          ctx.putImageData(imagedata, 0, 0);
-          _this.tileDrawn(canvas);
-        };
+        this._workers[i].onmessage = onWorker;
         i++;
       }
 
@@ -295,6 +299,16 @@ if (typeof document === "undefined") {
       return L.TileLayer.Canvas.prototype.onRemove.call(this, map);
     },
     drawTile: function (canvas, tilePoint) {
+      var tileID = tilePoint.x + ":" + tilePoint.y + ":" + this._map.getZoom();
+      if (this.cache.has(tileID)) {
+        var array = new Uint8Array(this.cache.get(tileID).pixels);
+        var ctx = canvas.getContext('2d');
+        var imagedata = ctx.getImageData(0, 0, 256, 256);
+        imagedata.data.set(array);
+        ctx.putImageData(imagedata, 0, 0);
+        this.tileDrawn(canvas);
+        return;
+      }
       if (!this.queue.free.length) {
         this.queue.tiles.push([canvas, tilePoint]);
         this.queue.len++;
