@@ -152,7 +152,7 @@ if (typeof document === "undefined") {
     var scale = Math.pow(2, data.z - 1);
     var x0 = data.x / scale - 1;
     var y0 = data.y / scale - 1;
-    var d = 1 / (scale << 8);
+    var d = (scale << 8);
     var pixels = new Array(65536);
     var MAX_ITER = data.maxIter;
     var c, cx, cy, iter, i = 0, px, py, a1, a2, a3, a4;
@@ -160,8 +160,8 @@ if (typeof document === "undefined") {
     while (i < 65536) {
       px = i % 256;
       py = (i - px) >> 8;
-      cx = x0 + px * d;
-      cy = y0 + py * d;
+      cx = x0 + px / d;
+      cy = y0 + py / d;
       iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
       c = ~~((iter / MAX_ITER) * 360);
       pixels[i++] = colors[c];
@@ -171,8 +171,8 @@ if (typeof document === "undefined") {
     while (i < 65536) {
       px = i % 256;
       py = (i - px) >> 8;
-      cx = x0 + px * d;
-      cy = y0 + py * d;
+      cx = x0 + px / d;
+      cy = y0 + py / d;
       if (!px || !py || !px % 255 || py % 255) {
         iter = fractalFunctions[data.type](cx, cy, MAX_ITER, data.cr, data.ci);
         c = ~~((iter / MAX_ITER) * 360);
@@ -243,7 +243,7 @@ if (typeof document === "undefined") {
         this.queue.free.push(i);
         this._workers[i] = new Worker(this.workerPath);
         this._workers[i].onmessage = function (e) {
-          console.log(Date.now() - e.data.start + ":" + e.data.tileID)
+          console.log(Date.now() - e.data.start + ":" + e.data.tileID);
           var canvas;
           if (_this.queue.len) {
             _this.queue.len--;
@@ -324,5 +324,5 @@ if (typeof document === "undefined") {
   });
   L.tileLayer.fractalLayer = function (numWorkers, t, mi, cr, ci) {
     return new L.TileLayer.FractalLayer(numWorkers, t, mi, cr, ci);
-  }
+  };
 }

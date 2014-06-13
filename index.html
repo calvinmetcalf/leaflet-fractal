@@ -61,15 +61,13 @@
         values.iter = values.iterations;
         var form = document.getElementsByClassName("juliaForm");
         if (form.length) {
-          form[0].innerHTML = this.template(values);
+          form[0].innerHTML = Mustache.render(this.template, values);
         }
       },
       onAdd: function (map) {
         // create the control container with a particular class name
-        var temp = "\n<label class=\"juliaLabel\" for=\"fractalType\">Fractal Type: </label>\n<select class=\"juliaInput\" id=\"fractalType\" name=\"fractalType\">\n<option value=\"julia\" {{#julia}}selected{{/julia}}>Julia</option>\n<option value=\"mandlebrot\" {{#mandlebrot}}selected{{/mandlebrot}}>Mandlebrot</option>\n<option value=\"multibrot3\" {{#multibrot3}}selected{{/multibrot3}}>Multibrot 3</option>\n<option value=\"multibrot5\" {{#multibrot5}}selected{{/multibrot5}}>Multibrot 5</option>\n<option value=\"burningShip\" {{#burningShip}}selected{{/burningShip}}>Burning Ship</option>\n<option value=\"tricorn\" {{#tricorn}}selected{{/tricorn}}>Tricorn</option>\n\n</select>\n{{#julia}}\n<label class=\"juliaLabel\" for=\"cr\">R: </label>\n<input class=\"juliaInput\" id=\"cr\" type=\"number\" name=\"cr\" value=\"{{cr}}\" min=\"-2\" max=\"2\" step=\"0.001\">\n<label class=\"juliaLabel\" for=\"ci\">I: </label>\n<input class=\"juliaInput\" type=\"number\" name=\"ci\" id=\"ci\" value=\"{{ci}}\" min=\"-2\" max=\"2\" step=\"0.001\">\n{{/julia}}\n<label class=\"juliaLabel\" for=\"iterations\">Iterations: </label>\n<input class=\"juliaInput\" type=\"number\" name=\"iterations\" value=\"{{iter}}\" step=\"100\" min=\"0\" id=\"iter\">\n\n";
         var container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control-layers-expanded leaflet-control');
         // ... initialize other DOM elements, add listeners, etc.
-        this.template = Mustache.parse(temp);
         var form = L.DomUtil.create("form", "juliaForm", container);
         var params = {};
         params.iter = 500;
@@ -102,7 +100,7 @@
           }
         };
         params[params.type] = true;
-        form.innerHTML = Mustache.render(temp, params);
+        form.innerHTML = Mustache.render(this.template, params);
         if (!L.Browser.touch) {
           L.DomEvent.disableClickPropagation(container);
           L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
@@ -111,9 +109,8 @@
         }
 
         return container;
-      }
-
-
+      },
+      template: "\n<label class=\"juliaLabel\" for=\"fractalType\">Fractal Type: </label>\n<select class=\"juliaInput\" id=\"fractalType\" name=\"fractalType\">\n<option value=\"julia\" {{#julia}}selected{{/julia}}>Julia</option>\n<option value=\"mandlebrot\" {{#mandlebrot}}selected{{/mandlebrot}}>Mandlebrot</option>\n<option value=\"multibrot3\" {{#multibrot3}}selected{{/multibrot3}}>Multibrot 3</option>\n<option value=\"multibrot5\" {{#multibrot5}}selected{{/multibrot5}}>Multibrot 5</option>\n<option value=\"burningShip\" {{#burningShip}}selected{{/burningShip}}>Burning Ship</option>\n<option value=\"tricorn\" {{#tricorn}}selected{{/tricorn}}>Tricorn</option>\n\n</select>\n{{#julia}}\n<label class=\"juliaLabel\" for=\"cr\">R: </label>\n<input class=\"juliaInput\" id=\"cr\" type=\"number\" name=\"cr\" value=\"{{cr}}\" min=\"-2\" max=\"2\" step=\"0.001\">\n<label class=\"juliaLabel\" for=\"ci\">I: </label>\n<input class=\"juliaInput\" type=\"number\" name=\"ci\" id=\"ci\" value=\"{{ci}}\" min=\"-2\" max=\"2\" step=\"0.001\">\n{{/julia}}\n<label class=\"juliaLabel\" for=\"iterations\">Iterations: </label>\n<input class=\"juliaInput\" type=\"number\" name=\"iterations\" value=\"{{iter}}\" step=\"100\" min=\"0\" id=\"iter\">\n\n"
     });
     map.addControl(new JuliaControl());
   </script>
