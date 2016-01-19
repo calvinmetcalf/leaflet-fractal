@@ -1,0 +1,18 @@
+<label class="juliaLabel" for="fractalType">Fractal Type: </label>
+<select class="juliaInput" id="fractalType" name="fractalType">
+<option value="julia" {{#julia}}selected{{/julia}}>Julia</option>
+<option value="mandlebrot" {{#mandlebrot}}selected{{/mandlebrot}}>Mandlebrot</option>
+<option value="multibrot3" {{#multibrot3}}selected{{/multibrot3}}>Multibrot 3</option>
+<option value="multibrot5" {{#multibrot5}}selected{{/multibrot5}}>Multibrot 5</option>
+<option value="burningShip" {{#burningShip}}selected{{/burningShip}}>Burning Ship</option>
+<option value="tricorn" {{#tricorn}}selected{{/tricorn}}>Tricorn</option>
+
+</select>
+{{#julia}}
+<label class="juliaLabel" for="cr">R: </label>
+<input class="juliaInput" id="cr" type="number" name="cr" value="{{cr}}" min="-2" max="2" step="0.001">
+<label class="juliaLabel" for="ci">I: </label>
+<input class="juliaInput" type="number" name="ci" id="ci" value="{{ci}}" min="-2" max="2" step="0.001">
+{{/julia}}
+<label class="juliaLabel" for="iterations">Iterations: </label>
+<input class="juliaInput" type="number" name="iterations" value="{{iter}}" step="100" min="0" id="iter">

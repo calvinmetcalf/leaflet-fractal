@@ -7,3 +7,5 @@ Fractal Set Viewer
 All rendering is performed in Web Workers resulting in smooth user interaction.
 
 Many thanks to @calvinmetcalf for significant example improvements!
+
+Includes code from leaflet.hash

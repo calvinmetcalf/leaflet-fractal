@@ -1,0 +1,32 @@
+{
+  "name": "leaflet-fractal",
+  "version": "1.0.0",
+  "description": "Fractal Set Viewer ==================",
+  "main": "FractalLayer.js",
+  "dependencies": {
+    "leaflet": "^0.7.7",
+    "lru-cache": "^4.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "hbsify": "^1.0.1"
+  },
+  "scripts": {
+    "build": "browserify script.js > bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calvinmetcalf/leaflet-fractal.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/calvinmetcalf/leaflet-fractal/issues"
+  },
+  "browserify": {
+    "transform": [
+      "hbsify"
+    ]
+  },
+  "homepage": "https://github.com/calvinmetcalf/leaflet-fractal#readme"
+}
