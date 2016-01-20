@@ -67,32 +67,38 @@ var colors = new Uint32Array([
   // Functions return number from 0 to (maxIter-1)
 var fractalFunctions = {
   mandlebrot: function (cx, cy, maxIter) {
-    var iter, xn, x = 0, y = 0;
-    for (iter = 0; x * x + y * y < 4 && iter < maxIter; iter++) {
-      xn = x * x - y * y + cx;
+    var iter, xn, x = 0, y = 0, xx = 0, yy = 0;
+    for (iter = 0; xx + yy < 4 && iter < maxIter; iter++) {
+      xn = xx - yy + cx;
       y = (x * y) * 2 + cy;
+      yy = y * y;
       x = xn;
+      xx = x * x;
     }
 
     return iter;
   },
   burningShip: function (cx, cy, maxIter) {
-    var iter, xn, x = 0, y = 0;
-    for (iter = 0; x * x + y * y < 4 && iter < maxIter; iter++) {
-      xn = x * x - y * y - cx;
+    var iter, xn, x = 0, y = 0, yy = 0, xx = 0;
+    for (iter = 0; xx + yy < 4 && iter < maxIter; iter++) {
+      xn = xx - yy - cx;
       y = 2 * Math.abs(x * y) + cy;
+      yy = y * y;
       x = xn;
+      xx = x * x;
     }
 
     return iter;
   },
   multibrot: function (cx, cy, maxIter, cr) {
-    var iter, xn, x = 0, y = 0, n1, n2, n3;
-    for (iter = 0; x * x + y * y < 4 && iter < maxIter; iter++) {
-      n3 = (x * x + y * y);
+    var iter, xn, x = 0, y = 0, xx = 0, yy = 0, n1, n2, n3;
+    for (iter = 0; xx + yy < 4 && iter < maxIter; iter++) {
+      n3 = (xx + yy);
       if (!n3) {
         x = cx;
         y = cy;
+        xx = x * x;
+        yy = y * y;
         continue;
       }
       n1 = Math.pow(n3, (cr >> 1));
@@ -100,46 +106,58 @@ var fractalFunctions = {
       xn = n1 * Math.cos(n2) + cx;
       y = n1 * Math.sin(n2) + cy;
       x = xn;
+      yy = y * y;
+      xx = x * x;
     }
 
     return iter;
   },
   multibrot3: function (cx, cy, maxIter) {
-    var iter, xn, x = 0, y = 0;
-    for (iter = 0; x * x + y * y < 4 && iter < maxIter; iter++) {
-      xn = Math.pow(x, 3) - 3 * x * Math.pow(y, 2) + cx;
-      y = 3 * Math.pow(x, 2) * y - Math.pow(y, 3) + cy;
+    var iter, xn, x = 0, y = 0, xx = 0, yy = 0;
+    for (iter = 0; xx + yy < 4 && iter < maxIter; iter++) {
+      xn = (xx * x) - 3 * x * (yy) + cx;
+      y = 3 * (xx) * y - (yy * y) + cy;
+      yy = y * y;
       x = xn;
+      xx = x * x;
     }
 
     return iter;
   },
   multibrot5: function (cx, cy, maxIter) {
-    var iter, xn, x = 0, y = 0;
-    for (iter = 0; x * x + y * y < 4 && iter < maxIter; iter++) {
-      xn = Math.pow(x, 5) - (10 * Math.pow(x, 3) * Math.pow(y, 2)) + (5 * x * Math.pow(y, 4)) + cx;
-      y = (5 * Math.pow(x, 4) * y) - (10 * x * x * Math.pow(y, 3)) + Math.pow(y, 5) + cy;
+    var iter, xn, x = 0, y = 0, xx = 0, yy = 0, yyy = 0, xxx = 0;
+    for (iter = 0; xx + yy < 4 && iter < maxIter; iter++) {
+      xn = (xx * xxx) - (10 * (xxx) * (yy)) + (5 * x * (yy * yy)) + cx;
+      y = (5 * (xx * xx) * y) - (10 * xx * (yyy)) + (yyy * yy) + cy;
+      yy = y * y;
+      yyy = yy * y;
       x = xn;
+      xx = x * x;
+      xxx = xx * x;
     }
 
     return iter;
   },
   tricorn: function (cx, cy, maxIter) {
-    var iter, xn, x = 0, y = 0;
-    for (iter = 0; x * x + y * y < 4 && iter < maxIter; iter++) {
-      xn = x * x - y * y - cx;
+    var iter, xn, x = 0, y = 0, yy = 0, xx = 0;
+    for (iter = 0; xx + yy < 4 && iter < maxIter; iter++) {
+      xn = xx - yy - cx;
       y = (x + x) * (-y) + cy;
+      yy = y * y;
       x = xn;
+      xx = x * x;
     }
 
     return iter;
   },
   julia: function (cx, cy, maxIter, cr, ci) {
-    var iter, xn, x = cx, y = cy;
-    for (iter = 0; x * x + y * y < 4 && iter < maxIter; iter++) {
-      xn = x * x - y * y + cr;
+    var iter, xn, x = cx, y = cy, yy = y * y, xx = x * x;
+    for (iter = 0; xx + yy < 4 && iter < maxIter; iter++) {
+      xn = xx - yy + cr;
       y = (x * y) * 2 + ci;
+      yy = y * y;
       x = xn;
+      xx = x * x;
     }
 
     return iter;

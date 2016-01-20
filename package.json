@@ -4,6 +4,7 @@
   "description": "Fractal Set Viewer ==================",
   "main": "FractalLayer.js",
   "dependencies": {
+    "debug": "^2.2.0",
     "leaflet": "^0.7.7",
     "lru-cache": "^4.0.0"
   },
@@ -12,7 +13,8 @@
     "hbsify": "^1.0.1"
   },
   "scripts": {
-    "build": "browserify script.js > bundle.js"
+    "build": "browserify script.js > bundle.js",
+    "build-dev": "browserify -d script.js > bundle.js"
   },
   "repository": {
     "type": "git",

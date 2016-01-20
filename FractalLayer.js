@@ -1,5 +1,6 @@
 var L = require('leaflet');
 var LRUCache = require('lru-cache');
+var debug = require('debug')('leaflet:fractal');
 L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
   options: {
     async: true,
@@ -29,7 +30,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     this.queue.len = 0;
     this.queue.tiles = [];
     function onWorker(e) {
-      console.log(Date.now() - e.data.start + ':' + e.data.tileID);
+      debug(Date.now() - e.data.start + ':' + e.data.tileID);
       var canvas;
       if (_this.queue.len) {
         _this.queue.len--;
